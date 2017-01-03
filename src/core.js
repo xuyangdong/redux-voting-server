@@ -11,6 +11,14 @@ export function setEntries(state, entries) {
               .set('initialEntries', list);
 }
 
+export function genElement(source) {
+  return {
+    value: ~~(Math.random() * 9) + 1,
+    code: Date.now().toString(36),
+    source,
+  }
+}
+
 function getWinners(vote) {
   if (!vote) return [];
   const [one, two] = vote.get('pair');
