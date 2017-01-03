@@ -19,9 +19,12 @@ export default function reducer(state = INITIAL_STATE, action) {
       return state.updateIn(['player', action.clientId], player => player || Map({
         name: moniker.choose(),
         isReady: false,
+        phone: '',
+        elements: List(),
       }))
     case 'TOGGLE_READY':
       return state.updateIn(['player', action.clientId, 'isReady'], v => !v)
+        .setIn(['player', action.clientId, 'phone'], action.phone)
 
       // Playing stage.
     case 'START_GAME':
