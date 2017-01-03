@@ -1,6 +1,9 @@
-import {List, Map} from 'immutable';
+import {List, Map, fromJS} from 'immutable';
 
-export const INITIAL_STATE = Map();
+export const INITIAL_STATE = fromJS({
+  targetValue: 24,
+  stage: 'PREPARE_STAGE',
+})
 
 export function setEntries(state, entries) {
   const list = List(entries);
