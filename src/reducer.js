@@ -5,7 +5,7 @@ import {
   vote,
   INITIAL_STATE,
   genElement,
-} from './core';
+} from './core'
 import {
   Map,
   List,
@@ -21,6 +21,7 @@ export default function reducer(state = INITIAL_STATE, action) {
         isReady: false,
         phone: '',
         elements: List(),
+        tip: '线索线索线索线索线索',
       }))
     case 'TOGGLE_READY':
       return state.updateIn(['player', action.clientId, 'isReady'], v => !v)
