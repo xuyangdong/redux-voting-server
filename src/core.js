@@ -1,5 +1,5 @@
 import {List, Map, fromJS} from 'immutable';
-import {familyNames,givenNames,nameDic,decorator} from './resource/name_dic'
+import {familyNames,givenNames,nameDic,decorator,noun} from './resource/name_dic'
 import _ from 'underscore'
 /*
 len:长度
@@ -57,7 +57,8 @@ export function getName2(){
 
 export function getName3(){
   var indexDecorator = parseInt(uuid(2,8))
-  return decorator[indexDecorator]+'的'
+  var indexNoun = parseInt(uuid(1,10))
+  return decorator[indexDecorator]+'的'+noun[indexNoun]
 }
 
 export const INITIAL_STATE = fromJS({
