@@ -5,19 +5,21 @@ import {
   vote,
   INITIAL_STATE,
   genElement,
+  getName,
+  getName2,
+  getName3,
 } from './core';
 import {
   Map,
   List,
 } from 'immutable'
 import moniker from 'moniker'
-
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     // Prepare stage.
     case 'JOIN_GAME':
       return state.updateIn(['player', action.clientId], player => player || Map({
-        name: moniker.choose(),
+        name: getName3(),
         isReady: false,
         phone: '',
         elements: List(),

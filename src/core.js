@@ -1,4 +1,64 @@
 import {List, Map, fromJS} from 'immutable';
+import {familyNames,givenNames,nameDic,decorator} from './resource/name_dic'
+import _ from 'underscore'
+/*
+len:长度
+radix:进制
+*/
+function uuid(len, radix) {
+    var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+    var uuid = [], i;
+    radix = radix || chars.length;
+    if (len) {
+      for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
+    } else {
+      var r;
+      uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+      uuid[14] = '4';
+      for (i = 0; i < 36; i++) {
+        if (!uuid[i]) {
+          r = 0 | Math.random()*16;
+          uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+        }
+      }
+    }
+    return uuid.join('');
+}
+
+function getGoodsId(){
+  let num = _.uniqueId()
+  num = (parseInt(num)%999)+''
+  switch (num.length) {
+    case 1:
+      return '00'+num
+    case 2:
+      return '0'+num
+    default:
+      return num
+  }
+}
+
+//生成名字
+export function getName(){
+  var i = parseInt(10 * Math.random())*10 + parseInt(10 * Math.random());
+  var familyName = familyNames[i];
+
+  var j = parseInt(10 * Math.random())*10 + parseInt(10 * Math.random());
+  var givenName = givenNames[i];
+
+  var name = familyName + givenName;
+  return name
+}
+
+export function getName2(){
+  var index = parseInt(uuid(2,10))
+  return nameDic[index]
+}
+
+export function getName3(){
+  var indexDecorator = parseInt(uuid(2,8))
+  return decorator[indexDecorator]+'的'
+}
 
 export const INITIAL_STATE = fromJS({
   targetValue: 24,
@@ -14,7 +74,7 @@ export function setEntries(state, entries) {
 export function genElement(source) {
   return Map({
     value: ~~(Math.random() * 9) + 1,
-    code: Date.now().toString(36),
+    code: getGoodsId(),
     source,
   })
 }
