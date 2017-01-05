@@ -14,7 +14,7 @@ export function setEntries(state, entries) {
 export function genElement(source) {
   return Map({
     value: ~~(Math.random() * 9) + 1,
-    code: Date.now().toString(36),
+    code: (Math.random()*1000).toString(32),
     source,
   })
 }

@@ -30,7 +30,9 @@ export default function reducer(state = INITIAL_STATE, action) {
       // Playing stage.
     case 'START_GAME':
       return state.set('stage', 'PLAYING_STAGE')
-        .update('player', players => players.filter(player => player.get('isReady')).map((player, playerId) => player.set('elements', List([genElement(playerId)]))))
+        .update('player', players => players.filter(player => player.get('isReady')).map((player, playerId) => player.set('elements', List([genElement(playerId), genElement(playerId), genElement(playerId)]))))
+    case 'RESORT_ELEMENTS':
+      return state.setIn(['player', action.clientId, 'elements'], action.newElements)
 
     case 'SET_ENTRIES':
       return setEntries(state, action.entries);
