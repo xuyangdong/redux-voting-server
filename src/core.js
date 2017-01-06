@@ -56,7 +56,7 @@ export function getName2(){
 }
 
 export function getName3(){
-  var indexDecorator = parseInt(uuid(2,8))
+  var indexDecorator = parseInt(uuid(2,6))
   var indexNoun = parseInt(uuid(1,10))
   return decorator[indexDecorator]+'的'+noun[indexNoun]
 }
