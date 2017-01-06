@@ -13,6 +13,7 @@ import {
 import _ from 'underscore'
 
 const TIP_MAP = {
+  '0': ['测试线索0', '测试线索', '测试线索'],
   '1': ['测试线索1', '测试线索', '测试线索'],
   '2': ['测试线索2', '测试线索', '测试线索'],
   '3': ['测试线索3', '测试线索', '测试线索'],
@@ -25,7 +26,6 @@ const TIP_MAP = {
   '+': ['测试线索10', '测试线索', '测试线索'],
   '-': ['测试线索11', '测试线索', '测试线索'],
   '*': ['测试线索12', '测试线索', '测试线索'],
-  '/': ['测试线索13', '测试线索', '测试线索'],
 }
 
 function uuid(len, radix) {
@@ -97,11 +97,15 @@ export const INITIAL_STATE = fromJS({
     '010': genPlayer(),
     '011': genPlayer(),
     '012': genPlayer(),
-  })
+  }),
+  game: {
+    startTime: null,
+    totalTime: 300,
+  },
 })
 
 export const genElement = function() {
-  const ELEMENT_SET = ['+', '-', '*', '/', '4', '2', '3', '7', '5', '9', '1', '6', '8']
+  const ELEMENT_SET = ['+', '-', '*', '4', '0', '2', '3', '7', '5', '9', '1', '6', '8']
   let i = 0
 
   return (source) => {
@@ -110,7 +114,7 @@ export const genElement = function() {
       value,
       source,
       code: genCode(),
-      tip: TIP_MAP[value][0]
+      tip: TIP_MAP[value][0],
     })
   }
 }()

@@ -21,6 +21,7 @@ export default function reducer(state = INITIAL_STATE, action) {
     case 'START_GAME':
       return state.set('stage', 'PLAYING_STAGE')
         .update('player', players => players.filter(player => player.get('isReady')).map((player, playerId) => player.set('elements', List([genElement(playerId)]))))
+        .setIn(['game', 'startTime'], Date.now())
     case 'RESORT_ELEMENTS':
       return state.setIn(['player', action.clientId, 'elements'], fromJS(action.newElements))
     case 'ADD_ANOTHER_ELEMENT':
