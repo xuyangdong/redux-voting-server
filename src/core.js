@@ -82,7 +82,7 @@ export const genPlayer = () => Map({
 })
 
 export const INITIAL_STATE = fromJS({
-  targetValue: 24,
+  targetValue: 9,
   stage: 'PREPARE_STAGE',
   player: fromJS({
     '001': genPlayer(),

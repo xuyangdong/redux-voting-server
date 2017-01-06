@@ -24,7 +24,7 @@ export default function reducer(state = INITIAL_STATE, action) {
         .update('player', players => players.filter(player => player.get('isReady')).map((player, playerId) => player.set('elements', List([genElement(playerId)]))).map(player => player.set('value', valueFromElements(player.get('elements')))))
         .setIn(['game', 'startTime'], Date.now())
     case 'RESORT_ELEMENTS':
-      return state.updateIn(['player', action.clientId], player => player.set('elements', action.newElements).set('value', valueFromElements(action.newElements)))
+      return state.updateIn(['player', action.clientId], player => player.set('elements', fromJS(action.newElements)).set('value', valueFromElements(fromJS(action.newElements))))
     case 'ADD_ANOTHER_ELEMENT':
       return state.updateIn(['player', action.clientId, 'elements'], (elements) => {
         if (!elements.some(v => v.get('code') === action.code)) {
@@ -33,13 +33,17 @@ export default function reducer(state = INITIAL_STATE, action) {
             return elements.push(elementsList.find(v => v.get('code') === action.code).delete('tip'))
           }
         }
-
         return elements
       }).updateIn(['player', action.clientId], player => player.set('value', valueFromElements(player.get('elements'))))
     case 'DELETE_ELEMENT':
       return state
         .updateIn(['player', action.clientId, 'elements'], elements => elements.filter(v => v.get('tip') || v.get('code') !== action.code))
         .updateIn(['player', action.clientId], player => player.set('value', valueFromElements(player.get('elements'))))
+    case 'SIGNAL_COMPLETE':
+      return state.updateIn(['result', action.clientId], (record) => {
+        record = record ? record : Map()
+        return record.set('timestamp', action.timestamp)
+      })
   }
 
   return state;
