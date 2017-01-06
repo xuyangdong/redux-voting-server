@@ -118,3 +118,14 @@ export const genElement = function() {
     })
   }
 }()
+
+export const valueFromElements = (elements) => {
+  let result
+  try {
+    const expr = elements.map(v => v.get('value')).join(" ")
+    result = eval(expr)
+  } catch (err) {
+    result = 0
+  }
+  return result
+}
