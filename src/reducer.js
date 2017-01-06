@@ -14,6 +14,9 @@ export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     // Prepare stage.
     case 'JOIN_GAME':
+      if (state.get('stage') !== 'PREPARE_STAGE') {
+        return state
+      }
       return state.updateIn(['player', action.clientId], player => player || genPlayer())
     case 'TOGGLE_READY':
       return state.updateIn(['player', action.clientId, 'isReady'], v => !v)

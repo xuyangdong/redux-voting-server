@@ -70,7 +70,7 @@ export function getName2() {
 }
 
 export function getName3() {
-  var indexDecorator = parseInt(uuid(2, 8))
+  var indexDecorator = parseInt(uuid(2, 6))
   var indexNoun = parseInt(uuid(1, 10))
   return decorator[indexDecorator] + '的' + noun[indexNoun]
 }
@@ -82,21 +82,21 @@ export const genPlayer = () => Map({
 })
 
 export const INITIAL_STATE = fromJS({
-  targetValue: 9,
+  targetValue: 4,
   stage: 'PREPARE_STAGE',
   player: fromJS({
-    '001': genPlayer(),
-    '002': genPlayer(),
-    '003': genPlayer(),
-    '004': genPlayer(),
-    '005': genPlayer(),
-    '006': genPlayer(),
-    '007': genPlayer(),
-    '008': genPlayer(),
-    '009': genPlayer(),
-    '010': genPlayer(),
-    '011': genPlayer(),
-    '012': genPlayer(),
+    // '001': genPlayer(),
+    // '002': genPlayer(),
+    // '003': genPlayer(),
+    // '004': genPlayer(),
+    // '005': genPlayer(),
+    // '006': genPlayer(),
+    // '007': genPlayer(),
+    // '008': genPlayer(),
+    // '009': genPlayer(),
+    // '010': genPlayer(),
+    // '011': genPlayer(),
+    // '012': genPlayer(),
   }),
   game: {
     startTime: null,
@@ -105,7 +105,7 @@ export const INITIAL_STATE = fromJS({
 })
 
 export const genElement = function() {
-  const ELEMENT_SET = ['+', '-', '*', '4', '0', '2', '3', '7', '5', '9', '1', '6', '8']
+  const ELEMENT_SET = ['2', '+', '2', '4', '2', '-', '+', '4', '2', '4', '+', '+', '-']
   let i = 0
 
   return (source) => {
