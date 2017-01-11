@@ -25,7 +25,7 @@ const TIP_MAP = {
   '9': ['测试线索9', '测试线索', '测试线索'],
   '+': ['测试线索10', '测试线索', '测试线索'],
   '-': ['测试线索11', '测试线索', '测试线索'],
-  '*': ['测试线索12', '测试线索', '测试线索'],
+  '×': ['测试线索12', '测试线索', '测试线索'],
 }
 
 function uuid(len, radix) {
@@ -49,8 +49,16 @@ function uuid(len, radix) {
   return uuid.join('');
 }
 
+const CODE_SET = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+const pool = []
 function genCode() {
-  return _.uniqueId('00000').slice(-3)
+  const ret = _.sample(CODE_SET, 3).sort().join("")
+  if (~pool.indexOf(ret)) {
+    return genCode()
+  } else {
+    pool.push(ret)
+    return ret
+  }
 }
 
 export function getName() {
@@ -82,7 +90,7 @@ export const genPlayer = () => Map({
 })
 
 export const INITIAL_STATE = fromJS({
-  targetValue: 4,
+  targetValue: 24,
   stage: 'PREPARE_STAGE',
   player: fromJS({
     // '001': genPlayer(),
@@ -105,7 +113,7 @@ export const INITIAL_STATE = fromJS({
 })
 
 export const genElement = function() {
-  const ELEMENT_SET = ['2', '+', '2', '4', '2', '-', '+', '4', '2', '4', '+', '+', '-']
+  const ELEMENT_SET = ['2', '+', '3', '×', '8', '-', '1', '9', '6', '4', '0', '8', '2']
   let i = 0
 
   return (source) => {

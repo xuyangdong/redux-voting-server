@@ -29,11 +29,14 @@ export default function reducer(state = INITIAL_STATE, action) {
     case 'RESORT_ELEMENTS':
       return state.updateIn(['player', action.clientId], player => player.set('elements', fromJS(action.newElements)).set('value', valueFromElements(fromJS(action.newElements))))
     case 'ADD_ANOTHER_ELEMENT':
+      // 代码默认字母顺序。
+      const code = action.codeList.sort().join()
+
       return state.updateIn(['player', action.clientId, 'elements'], (elements) => {
-        if (!elements.some(v => v.get('code') === action.code)) {
+        if (!elements.some(v => v.get('code') === code)) {
           const elementsList = state.get('player').toList().map(v => v.get('elements')).flatten(1)
-          if (elementsList.find(v => v.get('code') === action.code)) {
-            return elements.push(elementsList.find(v => v.get('code') === action.code).delete('tip'))
+          if (elementsList.find(v => v.get('code') === code && v.get('value') == action.targetValue)) {
+            return elements.push(elementsList.find(v => v.get('code') === code).delete('tip'))
           }
         }
         return elements
