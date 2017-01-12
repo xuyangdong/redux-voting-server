@@ -13,19 +13,19 @@ import {
 import _ from 'underscore'
 
 const TIP_MAP = {
-  '0': ['测试线索0', '测试线索', '测试线索'],
-  '1': ['测试线索1', '测试线索', '测试线索'],
-  '2': ['测试线索2', '测试线索', '测试线索'],
-  '3': ['测试线索3', '测试线索', '测试线索'],
-  '4': ['测试线索4', '测试线索', '测试线索'],
-  '5': ['测试线索5', '测试线索', '测试线索'],
-  '6': ['测试线索6', '测试线索', '测试线索'],
-  '7': ['测试线索7', '测试线索', '测试线索'],
-  '8': ['测试线索8', '测试线索', '测试线索'],
-  '9': ['测试线索9', '测试线索', '测试线索'],
-  '+': ['测试线索10', '测试线索', '测试线索'],
-  '-': ['测试线索11', '测试线索', '测试线索'],
-  '×': ['测试线索12', '测试线索', '测试线索'],
+  '0': ['我是0', '测试线索', '测试线索'],
+  '1': ['我是1', '测试线索', '测试线索'],
+  '2': ['我是2', '测试线索', '测试线索'],
+  '3': ['我是3', '测试线索', '测试线索'],
+  '4': ['我是4', '测试线索', '测试线索'],
+  '5': ['我是5', '测试线索', '测试线索'],
+  '6': ['我是6', '测试线索', '测试线索'],
+  '7': ['我是7', '测试线索', '测试线索'],
+  '8': ['我是8', '测试线索', '测试线索'],
+  '9': ['我是9', '测试线索', '测试线索'],
+  '+': ['我是10', '测试线索', '测试线索'],
+  '-': ['我是11', '测试线索', '测试线索'],
+  '×': ['我是12', '测试线索', '测试线索'],
 }
 
 function k_combinations(set, k) {
@@ -153,18 +153,18 @@ export const INITIAL_STATE = fromJS({
   targetValue: 24,
   stage: 'PREPARE_STAGE',
   player: fromJS({
-    // '001': genPlayer(),
-    // '002': genPlayer(),
-    // '003': genPlayer(),
-    // '004': genPlayer(),
-    // '005': genPlayer(),
-    // '006': genPlayer(),
-    // '007': genPlayer(),
-    // '008': genPlayer(),
-    // '009': genPlayer(),
-    // '010': genPlayer(),
-    // '011': genPlayer(),
-    // '012': genPlayer(),
+    '001': genPlayer(),
+    '002': genPlayer(),
+    '003': genPlayer(),
+    '004': genPlayer(),
+    '005': genPlayer(),
+    '006': genPlayer(),
+    '007': genPlayer(),
+    '008': genPlayer(),
+    '009': genPlayer(),
+    '010': genPlayer(),
+    '011': genPlayer(),
+    '012': genPlayer(),
   }),
   game: {
     startTime: null,
@@ -173,7 +173,7 @@ export const INITIAL_STATE = fromJS({
 })
 
 export const genElement = function() {
-  const ELEMENT_SET = ['2', '+', '3', '×', '8', '-', '1', '9', '6', '4', '0', '8', '2']
+  const ELEMENT_SET = ['3', '×', '6', '+', '+', '6', '2', '3', '×', '5', '-', '7', '1']
   let i = 0
 
   return (source) => {
@@ -190,7 +190,7 @@ export const genElement = function() {
 export const valueFromElements = (elements) => {
   let result
   try {
-    const expr = elements.map(v => v.get('value')).join(" ")
+    const expr = elements.map(v => v.get('value')).join(" ").replace(/×/g, "*")
     result = eval(expr)
   } catch (err) {
     result = 0
