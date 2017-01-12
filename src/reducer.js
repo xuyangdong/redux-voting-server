@@ -10,6 +10,12 @@ import {
   fromJS,
 } from 'immutable'
 
+function isSameCode(codeStr, codeList) {
+  const pre = codeStr.split('').sort().join('')
+  const append = codeList.sort().join('')
+  return pre === append
+}
+
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     // Prepare stage.
@@ -30,13 +36,13 @@ export default function reducer(state = INITIAL_STATE, action) {
       return state.updateIn(['player', action.clientId], player => player.set('elements', fromJS(action.newElements)).set('value', valueFromElements(fromJS(action.newElements))))
     case 'ADD_ANOTHER_ELEMENT':
       // 代码默认字母顺序。
-      const code = action.codeList.sort().join()
+      const code = action.codeList
 
       return state.updateIn(['player', action.clientId, 'elements'], (elements) => {
-        if (!elements.some(v => v.get('code') === code)) {
+        if (!elements.some(v => isSameCode(v.get('code'), code.slice()))) {
           const elementsList = state.get('player').toList().map(v => v.get('elements')).flatten(1)
-          if (elementsList.find(v => v.get('code') === code && v.get('value') == action.targetValue)) {
-            return elements.push(elementsList.find(v => v.get('code') === code).delete('tip'))
+          if (elementsList.find(v => isSameCode(v.get('code'), code.slice()) && v.get('value') == action.targetValue)) {
+            return elements.push(elementsList.find(v => isSameCode(v.get('code'), code.slice())).delete('tip'))
           }
         }
         return elements
