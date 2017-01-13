@@ -157,6 +157,7 @@ export const nameDic = [
 ,'蹲得下，跳得高'
 ,'心中有海'
 ]
+
 export const decorator = [
 '才貌双全'
 ,'逸群之才'

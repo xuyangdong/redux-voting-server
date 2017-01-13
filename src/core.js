@@ -153,18 +153,18 @@ export const INITIAL_STATE = fromJS({
   targetValue: 24,
   stage: 'PREPARE_STAGE',
   player: fromJS({
-    '001': genPlayer(),
-    '002': genPlayer(),
-    '003': genPlayer(),
-    '004': genPlayer(),
-    '005': genPlayer(),
-    '006': genPlayer(),
-    '007': genPlayer(),
-    '008': genPlayer(),
-    '009': genPlayer(),
-    '010': genPlayer(),
-    '011': genPlayer(),
-    '012': genPlayer(),
+    // '001': genPlayer(),
+    // '002': genPlayer(),
+    // '003': genPlayer(),
+    // '004': genPlayer(),
+    // '005': genPlayer(),
+    // '006': genPlayer(),
+    // '007': genPlayer(),
+    // '008': genPlayer(),
+    // '009': genPlayer(),
+    // '010': genPlayer(),
+    // '011': genPlayer(),
+    // '012': genPlayer(),
   }),
   game: {
     startTime: null,
@@ -174,6 +174,7 @@ export const INITIAL_STATE = fromJS({
 
 export const genElement = function() {
   const ELEMENT_SET = ['3', '×', '6', '+', '+', '6', '2', '3', '×', '5', '-', '7', '1']
+  // const ELEMENT_SET = ['1', '+', '1']
   let i = 0
 
   return (source) => {
