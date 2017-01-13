@@ -4,9 +4,6 @@ import {
   fromJS
 } from 'immutable';
 import {
-  familyNames,
-  givenNames,
-  nameDic,
   decorator,
   noun
 } from './resource/name_dic'
