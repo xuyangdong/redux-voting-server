@@ -13,19 +13,76 @@ import {
 import _ from 'underscore'
 
 const TIP_MAP = {
-  '1': ['测试线索1', '测试线索', '测试线索'],
-  '2': ['测试线索2', '测试线索', '测试线索'],
-  '3': ['测试线索3', '测试线索', '测试线索'],
-  '4': ['测试线索4', '测试线索', '测试线索'],
-  '5': ['测试线索5', '测试线索', '测试线索'],
-  '6': ['测试线索6', '测试线索', '测试线索'],
-  '7': ['测试线索7', '测试线索', '测试线索'],
-  '8': ['测试线索8', '测试线索', '测试线索'],
-  '9': ['测试线索9', '测试线索', '测试线索'],
-  '+': ['测试线索10', '测试线索', '测试线索'],
-  '-': ['测试线索11', '测试线索', '测试线索'],
-  '*': ['测试线索12', '测试线索', '测试线索'],
-  '/': ['测试线索13', '测试线索', '测试线索'],
+  '0': ['我是0', '测试线索', '测试线索'],
+  '1': ['我是1', '测试线索', '测试线索'],
+  '2': ['我是2', '测试线索', '测试线索'],
+  '3': ['我是3', '测试线索', '测试线索'],
+  '4': ['我是4', '测试线索', '测试线索'],
+  '5': ['我是5', '测试线索', '测试线索'],
+  '6': ['我是6', '测试线索', '测试线索'],
+  '7': ['我是7', '测试线索', '测试线索'],
+  '8': ['我是8', '测试线索', '测试线索'],
+  '9': ['我是9', '测试线索', '测试线索'],
+  '+': ['我是10', '测试线索', '测试线索'],
+  '-': ['我是11', '测试线索', '测试线索'],
+  '×': ['我是12', '测试线索', '测试线索'],
+}
+
+function k_combinations(set, k) {
+  var i, j, combs, head, tailcombs;
+
+  // There is no way to take e.g. sets of 5 elements from
+  // a set of 4.
+  if (k > set.length || k <= 0) {
+    return [];
+  }
+
+  // K-sized set has only one K-sized subset.
+  if (k == set.length) {
+    return [set];
+  }
+
+  // There is N 1-sized subsets in a N-sized set.
+  if (k == 1) {
+    combs = [];
+    for (i = 0; i < set.length; i++) {
+      combs.push([set[i]]);
+    }
+    return combs;
+  }
+
+  // Assert {1 < k < set.length}
+
+  // Algorithm description:
+  // To get k-combinations of a set, we want to join each element
+  // with all (k-1)-combinations of the other elements. The set of
+  // these k-sized sets would be the desired result. However, as we
+  // represent sets with lists, we need to take duplicates into
+  // account. To avoid producing duplicates and also unnecessary
+  // computing, we use the following approach: each element i
+  // divides the list into three: the preceding elements, the
+  // current element i, and the subsequent elements. For the first
+  // element, the list of preceding elements is empty. For element i,
+  // we compute the (k-1)-computations of the subsequent elements,
+  // join each with the element i, and store the joined to the set of
+  // computed k-combinations. We do not need to take the preceding
+  // elements into account, because they have already been the i:th
+  // element so they are already computed and stored. When the length
+  // of the subsequent list drops below (k-1), we cannot find any
+  // (k-1)-combs, hence the upper limit for the iteration:
+  combs = [];
+  for (i = 0; i < set.length - k + 1; i++) {
+    // head is a list that includes only our current element.
+    head = set.slice(i, i + 1);
+    // We take smaller combinations from the subsequent elements
+    tailcombs = k_combinations(set.slice(i + 1), k - 1);
+    // For each (k-1)-combination we join it with the current
+    // and store it to the set of k-combinations.
+    for (j = 0; j < tailcombs.length; j++) {
+      combs.push(head.concat(tailcombs[j]));
+    }
+  }
+  return combs;
 }
 
 function uuid(len, radix) {
@@ -49,8 +106,19 @@ function uuid(len, radix) {
   return uuid.join('');
 }
 
+const CODE_SET = k_combinations(['R', 'A', 'N', 'D', 'O', 'M'], 3)
+const pool = []
+
 function genCode() {
-  return _.uniqueId('00000').slice(-3)
+
+  return CODE_SET.pop().join('')
+    // const ret = _.sample(CODE_SET, 3).sort().join("")
+    // if (~pool.indexOf(ret)) {
+    //   return genCode()
+    // } else {
+    //   pool.push(ret)
+    //   return ret
+    // }
 }
 
 export function getName() {
@@ -70,7 +138,7 @@ export function getName2() {
 }
 
 export function getName3() {
-  var indexDecorator = parseInt(uuid(2, 8))
+  var indexDecorator = parseInt(uuid(2, 6))
   var indexNoun = parseInt(uuid(1, 10))
   return decorator[indexDecorator] + '的' + noun[indexNoun]
 }
@@ -86,23 +154,28 @@ export const INITIAL_STATE = fromJS({
   stage: 'PREPARE_STAGE',
   // stage: 'PLAYING_STAGE',
   player: fromJS({
-    '001': genPlayer(),
-    '002': genPlayer(),
-    '003': genPlayer(),
-    '004': genPlayer(),
-    '005': genPlayer(),
-    '006': genPlayer(),
-    '007': genPlayer(),
-    '008': genPlayer(),
-    '009': genPlayer(),
-    '010': genPlayer(),
-    '011': genPlayer(),
-    '012': genPlayer(),
-  })
+    // '001': genPlayer(),
+    // '002': genPlayer(),
+    // '003': genPlayer(),
+    // '004': genPlayer(),
+    // '005': genPlayer(),
+    // '006': genPlayer(),
+    // '007': genPlayer(),
+    // '008': genPlayer(),
+    // '009': genPlayer(),
+    // '010': genPlayer(),
+    // '011': genPlayer(),
+    // '012': genPlayer(),
+  }),
+  game: {
+    startTime: null,
+    totalTime: 300,
+  },
 })
 
 export const genElement = function() {
-  const ELEMENT_SET = ['+', '-', '*', '/', '4', '2', '3', '7', '5', '9', '1', '6', '8']
+  const ELEMENT_SET = ['3', '×', '6', '+', '+', '6', '2', '3', '×', '5', '-', '7', '1']
+  // const ELEMENT_SET = ['1', '+', '1']
   let i = 0
 
   return (source) => {
@@ -111,7 +184,18 @@ export const genElement = function() {
       value,
       source,
       code: genCode(),
-      tip: TIP_MAP[value][0]
+      tip: TIP_MAP[value][0],
     })
   }
 }()
+
+export const valueFromElements = (elements) => {
+  let result
+  try {
+    const expr = elements.map(v => v.get('value')).join(" ").replace(/×/g, "*")
+    result = eval(expr)
+  } catch (err) {
+    result = 0
+  }
+  return result
+}
