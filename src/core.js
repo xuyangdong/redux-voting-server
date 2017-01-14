@@ -10,19 +10,15 @@ import {
 import _ from 'underscore'
 
 const TIP_MAP = {
-  '0': ['我是0', '测试线索', '测试线索'],
-  '1': ['我是1', '测试线索', '测试线索'],
-  '2': ['我是2', '测试线索', '测试线索'],
-  '3': ['我是3', '测试线索', '测试线索'],
-  '4': ['我是4', '测试线索', '测试线索'],
-  '5': ['我是5', '测试线索', '测试线索'],
-  '6': ['我是6', '测试线索', '测试线索'],
-  '7': ['我是7', '测试线索', '测试线索'],
-  '8': ['我是8', '测试线索', '测试线索'],
-  '9': ['我是9', '测试线索', '测试线索'],
-  '+': ['我是10', '测试线索', '测试线索'],
-  '-': ['我是11', '测试线索', '测试线索'],
-  '×': ['我是12', '测试线索', '测试线索'],
+  '1': ['氢的原子序数', '见人就变大', '江阴长江大桥是中国第（ ）的大钢箱梁悬索桥'],
+  '2': ['太极的儿子 四象的爸爸', '知名羽毛球选手李宗伟', '测试线索'],
+  '3': ['变小之后会很危险', '一周内最长的一天', '大于e 小于<π', '桃园结义', '颜料的原色数目'],
+  '5': ['体育频道', '联合国常任理事国数目', '地球上大洋的数目'],
+  '6': ['简谱中的la', '禄，很吉利的一个数字', '上帝在这一天创造了生物', '3的阶乘', '在网络语言中，一个人在某一事件中表现得极为出彩'],
+  '7': ['葫芦娃', '奥特曼之一的英文名', '五指并拢'],
+  '+': ['我有+', '我有+', '我有+', '我有+'],
+  '-': ['我有-', '我有-', '我有-', '我有+'],
+  '×': ['我有×', '我有×', '我有×', '我有+'],
 }
 
 function k_combinations(set, k) {
@@ -135,8 +131,8 @@ export function getName2() {
 }
 
 export function getName3() {
-  var indexDecorator = parseInt(uuid(2, 6)) % 25
-  var indexNoun = parseInt(uuid(1, 10)) % 25
+  var indexDecorator = parseInt(_.uniqueId()) % decorator.length
+  var indexNoun = parseInt(_.uniqueId()) % noun.length
   return decorator[indexDecorator] + '的' + noun[indexNoun]
 }
 
@@ -163,6 +159,14 @@ export const INITIAL_STATE = fromJS({
     '010': genPlayer(),
     '011': genPlayer(),
     '012': genPlayer(),
+    '013': genPlayer(),
+    '014': genPlayer(),
+    '015': genPlayer(),
+    '016': genPlayer(),
+    '017': genPlayer(),
+    '018': genPlayer(),
+    '020': genPlayer(),
+    '021': genPlayer(),
   }),
   game: {
     startTime: null,
@@ -181,7 +185,7 @@ export const genElement = function() {
       value,
       source,
       code: genCode(),
-      tip: TIP_MAP[value][0],
+      tip: TIP_MAP[value].pop(),
     })
   }
 }()
